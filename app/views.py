@@ -30,8 +30,13 @@ def about():
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
+
+    if current_user.is_authenticated:
+        return redirect(url_for('secure_page'))
+
     form = LoginForm()
-    if request.method == "POST":
+
+    if request.method == "POST" and form.validate_on_submit():
         # change this to actually validate the entire form submission
         # and not just one field
         if form.username.data:
